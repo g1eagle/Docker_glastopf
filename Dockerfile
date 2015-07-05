@@ -46,7 +46,7 @@ RUN git clone https://github.com/glastopf/glastopf.git /opt/glastopf && \
     rm -rf /opt/glastopf /tmp/* /var/tmp/*
 
 RUN mkdir -p /opt/glastopf
-ADD glastopf.cfg /opt/glastopf
+#ADD glastopf.cfg /opt/glastopf
 
 WORKDIR /opt/glastopf
 CMD ["glastopf-runner"]
