@@ -1,7 +1,5 @@
 FROM ubuntu:14.04
 
-ENV DEBIAN_FRONTEND noninteractive
-
 RUN apt-get update
 RUN apt-get install -y \
         build-essential \
@@ -31,22 +29,22 @@ RUN apt-get install -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN git clone https://github.com/glastopf/BFR.git /var/BFR && \
-    cd /var/BFR && \
+RUN git clone https://github.com/glastopf/BFR.git /opt/BFR && \
+    cd /opt/BFR && \
     phpize && \
     ./configure --enable-bfr && \
     make && \
     make install && \
     echo "zend_extension = "$(find /usr -name bfr.so) >> /etc/php5/cli/php.ini && \
-    rm -rf /var/BFR /tmp/* /var/tmp/*
+    rm -rf /opt/BFR /tmp/* /var/tmp/*
 
-RUN git clone https://github.com/glastopf/glastopf.git /var/glastopf && \
-    cd /var/glastopf && \
+RUN git clone https://github.com/glastopf/glastopf.git /opt/glastopf && \
+    cd /opt/glastopf && \
     python setup.py install && \
-    rm -rf /var/glastopf /tmp/* /var/tmp/*
+    rm -rf /opt/glastopf /tmp/* /var/tmp/*
 
-RUN mkdir -p /var/glastopf
-#ADD glastopf.cfg /var/glastopf
+RUN mkdir -p /opt/glastopf
+#ADD glastopf.cfg /opt/glastopf
 
-WORKDIR /var/glastopf
+
 CMD ["glastopf-runner"]
