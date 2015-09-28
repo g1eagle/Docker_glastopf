@@ -1,7 +1,17 @@
 FROM ubuntu:14.04
 
-RUN apt-get update
-RUN apt-get install -y \
+MAINTAINER Lukas Rist <glaslos@gmail.com>
+
+ENV DEBIAN_FRONTEND noninteractive
+
+## setup APT
+RUN sed -i '1ideb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse' /etc/apt/sources.list && \
+    sed -i '1ideb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse' /etc/apt/sources.list && \
+    sed -i '1ideb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted universe multiverse' /etc/apt/sources.list && \
+    sed -i '1ideb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse' /etc/apt/sources.list
+
+## Install dependencies
+RUN apt-get update && apt-get install -y \
         build-essential \
         g++ \
         gfortran \
@@ -29,7 +39,8 @@ RUN apt-get install -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN git clone https://github.com/glastopf/BFR.git /opt/BFR && \
+## Install and configure the PHP sandbox
+RUN git clone https://github.com/mushorg/BFR.git /opt/BFR && \
     cd /opt/BFR && \
     phpize && \
     ./configure --enable-bfr && \
@@ -38,13 +49,16 @@ RUN git clone https://github.com/glastopf/BFR.git /opt/BFR && \
     echo "zend_extension = "$(find /usr -name bfr.so) >> /etc/php5/cli/php.ini && \
     rm -rf /opt/BFR /tmp/* /var/tmp/*
 
-RUN git clone https://github.com/glastopf/glastopf.git /opt/glastopf && \
+
+## Install glastopf from latest sources
+RUN git clone https://github.com/mushorg/glastopf.git /opt/glastopf && \
     cd /opt/glastopf && \
     python setup.py install && \
     rm -rf /opt/glastopf /tmp/* /var/tmp/*
 
-RUN mkdir -p /opt/glastopf
-#ADD glastopf.cfg /opt/glastopf
+## Configuration
+RUN mkdir /var/glastopf
 
-
+EXPOSE 80
+WORKDIR /var/myhoneypot
 CMD ["glastopf-runner"]
