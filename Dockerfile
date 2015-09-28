@@ -60,5 +60,5 @@ RUN git clone https://github.com/mushorg/glastopf.git /opt/glastopf && \
 RUN mkdir /var/glastopf
 
 EXPOSE 80
-
+WORKDIR /var/glastopf
 CMD ["glastopf-runner"]
