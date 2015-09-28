@@ -58,6 +58,7 @@ RUN git clone https://github.com/mushorg/glastopf.git /opt/glastopf && \
 
 ## Configuration
 RUN mkdir /var/glastopf
+RUN mkdir /var/glastopf/log
 
 EXPOSE 80
 WORKDIR /var/glastopf
