@@ -61,5 +61,6 @@ RUN mkdir /var/glastopf
 RUN mkdir /var/glastopf/log
 
 EXPOSE 80
+VOLUME /var/glastopf/log
 WORKDIR /var/glastopf
 CMD ["glastopf-runner"]
