@@ -56,6 +56,9 @@ RUN git clone https://github.com/mushorg/glastopf.git /opt/glastopf && \
     python setup.py install && \
     rm -rf /opt/glastopf /tmp/* /var/tmp/*
 
+##Install nano
+RUN apt-get install nano
+
 ## Configuration
 RUN mkdir /var/glastopf
 RUN mkdir /var/glastopf/log
