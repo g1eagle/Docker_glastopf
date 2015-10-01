@@ -57,6 +57,8 @@ RUN git clone https://github.com/mushorg/glastopf.git /opt/glastopf && \
     rm -rf /opt/glastopf /tmp/* /var/tmp/*
 
 ##Install nano
+ENV TERM xterm
+
 RUN apt-get install nano
 
 ## Configuration
