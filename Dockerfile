@@ -32,7 +32,6 @@ RUN apt-get update && apt-get install -y \
         python-sqlalchemy \
         python2.7 \
         python2.7-dev && \
-        nano && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
